@@ -314,71 +314,61 @@ footer h2{font-size:24px}
 
     <div class="pros">
       <div class="pro only-paid"><b>Платный Claude (Pro)</b>
-        <ul><li>Claude сам скачивает ролик и смотрит его по кадрам — стиль повторяется точнее</li><li>Сложные движения: 3D, фото, много сцен</li><li>Готовое видео сразу файлом MP4</li><li>Правок — сколько нужно</li></ul></div>
+        <ul><li>Сильнее модель (Opus) — стиль повторяется точнее</li><li>Сложные движения: 3D, фото, много сцен</li><li>Готовое видео сразу файлом MP4</li><li>Правок — сколько нужно</li></ul></div>
       <div class="pro only-free"><b>Бесплатный Claude</b>
-        <ul><li>Ничего не платишь</li><li>Хватит на простой ролик: текст + фигуры, 2–3 сцены</li><li>Кадры ролика показываешь Claude скриншотами</li><li>Видео сохраняешь записью экрана, правок — 1–2: лимит небольшой</li></ul></div>
+        <ul><li>Ничего не платишь</li><li>Хватит на простой ролик: текст + фигуры, 2–3 сцены</li><li>Стиль разбирает так же — по прикреплённому видео</li><li>Видео сохраняешь записью экрана, правок — 1–2: лимит небольшой</li></ul></div>
     </div>
 
     <div class="steps">
 
       <article class="step" data-step="1">
         <div class="step-head"><div class="n">1</div><div><h3>Подготовь Claude</h3></div></div>
-        <ol class="do only-paid">
-          <li>Нужна подписка <b>Pro</b> (или выше). При отправке сообщения выбирай модель <b>Opus</b> — внизу, у поля ввода.</li>
-          <li>Один раз разреши Claude заходить на сайт с роликами: <b>claude.ai</b> → своё имя слева внизу → <span class="btnlbl">Settings</span> → <span class="btnlbl">Capabilities</span>.</li>
-          <li>Включи <span class="btnlbl">Code execution and file creation</span>.</li>
-          <li>Ниже, в поле <span class="btnlbl">Additional allowed domains</span>, добавь по очереди две строки (вписала → нажала <span class="btnlbl">Add</span>):
-            <div class="doms"><code class="dom">prompt-motion.com</code><code class="dom">*.prompt-motion.com</code></div>
-            <span class="muted">Нужны обе: на первом адресе сам сайт, на втором — видео.</span></li>
+        <ol class="do">
+          <li class="only-paid">Нужна подписка <b>Pro</b> (или выше). Модель — <b>Opus</b>: выбирается внизу, у поля ввода.</li>
+          <li class="only-free">Открой <a href="https://claude.ai" target="_blank" rel="noopener"><b>claude.ai</b></a> и войди в аккаунт.</li>
+          <li>Проверь, что включено <span class="btnlbl">Code execution and file creation</span>: своё имя слева внизу → <span class="btnlbl">Settings</span> → <span class="btnlbl">Capabilities</span>. Обычно оно уже включено — так Claude сможет «смотреть» видео по кадрам.</li>
+          <li class="only-free">Делай всё в <b>одном чате</b> от начала до конца — так Claude помнит стиль и меньше тратит лимит.</li>
         </ol>
-        <ol class="do only-free">
-          <li>Открой <a href="https://claude.ai" target="_blank" rel="noopener"><b>claude.ai</b></a> и войди в аккаунт. Ничего настраивать не нужно.</li>
-          <li>Сделай всё в <b>одном чате</b> от начала до конца — так Claude помнит стиль и меньше тратит лимит.</li>
-        </ol>
-        <div class="ok"><b>Итог шага:</b> <span class="only-paid">в настройках две строки с prompt-motion.com.</span><span class="only-free">открыт новый чат.</span></div>
+        <div class="ok"><b>Итог шага:</b> переключатель включён, открыт новый чат.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="2">
-        <div class="step-head"><div class="n">2</div><div><h3>Выбери ролик, который нравится</h3><p class="why">Смотри на движение и настроение, а не на тему — тему ты поменяешь на свою.</p></div></div>
+        <div class="step-head"><div class="n">2</div><div><h3>Скачай ролик, который нравится</h3><p class="why">Смотри на движение и настроение, а не на тему — тему ты поменяешь на свою.</p></div></div>
         <ol class="do">
-          <li>Открой сайт <a href="https://prompt-motion.com" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — это бесплатная библиотека моушн-роликов, сделанных в Claude. Регистрация не нужна.</li>
-          <li>Открой ролик, который зацепил, и скопируй ссылку на него.</li>
-          <li class="only-free">Сделай <b>3–4 скриншота</b> ролика: начало, середина, конец. Бесплатный Claude не умеет сам скачивать видео — он посмотрит на кадры.</li>
+          <li>Открой <a href="https://prompt-motion.com" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — бесплатная библиотека моушн-роликов, сделанных в Claude.</li>
+          <li>Открой ролик, который зацепил, и скачай видео к себе.</li>
         </ol>
-        <div class="ok"><b>Итог шага:</b> ссылка скопирована<span class="only-free"> и есть 3–4 скриншота</span>.</div>
-        <div class="warn only-free"><b>Совет:</b> для бесплатного Claude бери ролики попроще — с текстом и фигурами. 3D и фото он на бесплатном лимите обычно не вытянет.</div>
+        <div class="warn only-free"><b>Совет:</b> бесплатному Claude бери ролики попроще — с текстом и фигурами. 3D и фото на бесплатном лимите обычно не вытянуть.</div>
+        <div class="ok"><b>Итог шага:</b> видео лежит у тебя в загрузках.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="3">
-        <div class="step-head"><div class="n">3</div><div><h3>Попроси разобрать стиль</h3><p class="why">Claude опишет, из чего сделан ролик, и даст тебе промпт для таких же роликов.</p></div></div>
+        <div class="step-head"><div class="n">3</div><div><h3>Попроси разобрать стиль</h3><p class="why">Claude нарежет видео на кадры, опишет стиль и даст промпт для таких же роликов.</p></div></div>
         <ol class="do">
-          <li>Нажми <span class="btnlbl">Скопировать</span> у промпта ниже.</li>
-          <li>Вставь в новый чат Claude.</li>
-          <li>Сотри <mark class="m">[ссылка]</mark> и вставь вместо неё свою ссылку из шага 2.</li>
-          <li class="only-free">Нажми <span class="btnlbl">+</span> (или скрепку) и прикрепи скриншоты.</li>
+          <li>Нажми <span class="btnlbl">Скопировать</span> у промпта ниже и вставь в чат Claude.</li>
+          <li>Нажми <span class="btnlbl">+</span> (или скрепку) и прикрепи скачанное видео.</li>
           <li>Отправь.</li>
         </ol>
-        <div class="prompt only-paid">
+        <div class="prompt">
           <div class="prompt-top"><span>промпт 1 · разбор стиля</span><button class="copy" type="button" data-copy="p1">Скопировать</button></div>
-<pre id="p1">Разбери стиль моушн-ролика: <mark>[ссылка]</mark>
+<pre id="p1">Разбери стиль прикреплённого моушн-ролика.
 
-Скачай видео со страницы и посмотри его по кадрам.
-Коротко опиши: настроение, цвета, шрифты, как всё двигается, сцены по секундам.
+Нарежь видео на кадры (2–3 кадра в секунду), собери их в листы-раскадровки и посмотри все. Описывай только то, что реально видно в кадрах.
 
-В конце напиши готовый промпт, по которому можно сделать ролик в этом же стиле на любую тему.</pre>
+Коротко по пунктам:
+— сцены: сколько, как сменяются, есть ли ритм;
+— цвета: основные и акцент (с кодами);
+— шрифты и как двигается текст;
+— формы и анимация в каждой сцене;
+— приёмы, которые делают ролик «дорогим»;
+— 3–5 признаков, по которым стиль узнаётся.
+
+В конце напиши готовый промпт, по которому можно сделать ролик в этом же стиле на любую тему. Пиши по-русски, без воды.</pre>
         </div>
-        <div class="prompt only-free">
-          <div class="prompt-top"><span>промпт 1 · разбор стиля</span><button class="copy" type="button" data-copy="f1">Скопировать</button></div>
-<pre id="f1">Разбери стиль моушн-ролика: <mark>[ссылка]</mark>
-Прикладываю скриншоты из него: начало, середина, конец.
-
-Коротко опиши: настроение, цвета, шрифты, как всё двигается.
-
-В конце напиши короткий промпт, по которому можно сделать простой ролик в этом стиле на любую тему: 2–3 сцены, текст и фигуры.</pre>
-        </div>
-        <div class="ok"><b>Итог шага:</b> Claude прислал описание стиля и в конце — готовый промпт.</div>
+        <div class="warn only-free"><b>Пишет, что не может открыть видео?</b> Сделай 3–4 скриншота ролика (начало, середина, конец) и прикрепи их вместо видео.</div>
+        <div class="ok"><b>Итог шага:</b> Claude прислал разбор стиля и в конце — готовый промпт.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
@@ -512,7 +502,7 @@ footer h2{font-size:24px}
   watch(document);
 
   // хранение
-  var KEY='polka-moushn-v5', state={};
+  var KEY='polka-moushn-v6', state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 

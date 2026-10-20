@@ -322,20 +322,7 @@ footer h2{font-size:24px}
     <div class="steps">
 
       <article class="step" data-step="1">
-        <div class="step-head"><div class="n">1</div><div><h3>Выбери ролик, который нравится</h3><p class="why">Смотри на движение и настроение, а не на тему — тему ты поменяешь на свою.</p></div></div>
-        <ol class="do">
-          <li>Открой сайт <a href="https://prompt-motion.com" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — это бесплатная библиотека моушн-роликов, сделанных в Claude. Регистрация не нужна.</li>
-          <li>Листай и нажми на ролик, который зацепил. Откроется его страница.</li>
-          <li>Скопируй ссылку на эту страницу: на компьютере — из адресной строки браузера, на телефоне — «Поделиться» → «Скопировать».</li>
-          <li class="only-free">Сделай <b>3–4 скриншота</b> ролика: начало, середина, конец. Бесплатный Claude не умеет сам скачивать видео — он посмотрит на кадры.</li>
-        </ol>
-        <div class="ok"><b>Итог шага:</b> ссылка скопирована<span class="only-free"> и есть 3–4 скриншота</span>.</div>
-        <div class="warn only-free"><b>Совет:</b> для бесплатного Claude бери ролики попроще — с текстом и фигурами. 3D и фото он на бесплатном лимите обычно не вытянет.</div>
-        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
-      </article>
-
-      <article class="step" data-step="2">
-        <div class="step-head"><div class="n">2</div><div><h3>Подготовь Claude</h3></div></div>
+        <div class="step-head"><div class="n">1</div><div><h3>Подготовь Claude</h3></div></div>
         <ol class="do only-paid">
           <li>Нужна подписка <b>Pro</b> (или выше). При отправке сообщения выбирай модель <b>Opus</b> — внизу, у поля ввода.</li>
           <li>Один раз разреши Claude заходить на сайт с роликами: <b>claude.ai</b> → своё имя слева внизу → <span class="btnlbl">Settings</span> → <span class="btnlbl">Capabilities</span>.</li>
@@ -352,12 +339,24 @@ footer h2{font-size:24px}
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
+      <article class="step" data-step="2">
+        <div class="step-head"><div class="n">2</div><div><h3>Выбери ролик, который нравится</h3><p class="why">Смотри на движение и настроение, а не на тему — тему ты поменяешь на свою.</p></div></div>
+        <ol class="do">
+          <li>Открой сайт <a href="https://prompt-motion.com" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — это бесплатная библиотека моушн-роликов, сделанных в Claude. Регистрация не нужна.</li>
+          <li>Открой ролик, который зацепил, и скопируй ссылку на него.</li>
+          <li class="only-free">Сделай <b>3–4 скриншота</b> ролика: начало, середина, конец. Бесплатный Claude не умеет сам скачивать видео — он посмотрит на кадры.</li>
+        </ol>
+        <div class="ok"><b>Итог шага:</b> ссылка скопирована<span class="only-free"> и есть 3–4 скриншота</span>.</div>
+        <div class="warn only-free"><b>Совет:</b> для бесплатного Claude бери ролики попроще — с текстом и фигурами. 3D и фото он на бесплатном лимите обычно не вытянет.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
       <article class="step" data-step="3">
         <div class="step-head"><div class="n">3</div><div><h3>Попроси разобрать стиль</h3><p class="why">Claude опишет, из чего сделан ролик, и даст тебе промпт для таких же роликов.</p></div></div>
         <ol class="do">
           <li>Нажми <span class="btnlbl">Скопировать</span> у промпта ниже.</li>
           <li>Вставь в новый чат Claude.</li>
-          <li>Сотри <mark class="m">[ссылка]</mark> и вставь вместо неё свою ссылку из шага 1.</li>
+          <li>Сотри <mark class="m">[ссылка]</mark> и вставь вместо неё свою ссылку из шага 2.</li>
           <li class="only-free">Нажми <span class="btnlbl">+</span> (или скрепку) и прикрепи скриншоты.</li>
           <li>Отправь.</li>
         </ol>
@@ -513,7 +512,7 @@ footer h2{font-size:24px}
   watch(document);
 
   // хранение
-  var KEY='polka-moushn-v4', state={};
+  var KEY='polka-moushn-v5', state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 

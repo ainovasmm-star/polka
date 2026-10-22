@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>КАРУСЕЛЬ — шпаргалка</title>
+<meta name="description" content="Шпаргалка: живая карусель для Instagram одним промптом в Claude. Слайды двигаются, пост не пролистывают.">
+<meta property="og:title" content="КАРУСЕЛЬ — живая карусель одним промптом в Claude">
+<meta property="og:description" content="Тема → один промпт → 6 живых слайдов 4:5 в MP4 → карусель в Instagram.">
+<meta name="theme-color" content="#F3EFE6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fb:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --fi:"Playfair Display",Georgia,"Times New Roman",serif;
+  --fm:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --cream:#F3EFE6; --paper:#FFFDF8; --ink:#17151C; --muted:#6B6573; --line:#E3DCCD;
+  --cobalt:#3346D3; --mustard:#F2C94C; --green:#1F6B4A; --coral:#E2603F; --pink:#F2B5A8; --violet:#7424CD;
+  --r:30px; --shadow:0 18px 40px -22px rgba(23,21,28,.35),0 2px 0 rgba(23,21,28,.04);
+  --spring:cubic-bezier(.3,1.65,.5,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--fb);overflow-x:hidden}
+a{color:var(--cobalt)}
+::selection{background:var(--mustard);color:var(--ink)}
+
+/* ============ ЗАСТАВКА ============ */
+.wipe{position:fixed;inset:0;z-index:60;pointer-events:none;background:var(--coral);clip-path:circle(150% at 50% 50%);animation:wipeOut .75s cubic-bezier(.7,0,.25,1) .25s forwards}
+@keyframes wipeOut{to{clip-path:circle(0% at 50% 50%)}}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 16px 92px;overflow:hidden;isolation:isolate}
+.shape{position:absolute;z-index:-1;pointer-events:none}
+.sh1{width:120px;height:120px;border-radius:50%;background:var(--pink);left:-40px;top:12%;animation:bob 5s ease-in-out infinite}
+.sh2{width:64px;height:64px;border-radius:18px;background:var(--mustard);right:8%;top:9%;animation:bob 4s ease-in-out .5s infinite,turn 14s linear infinite}
+.sh3{width:150px;height:46px;border-radius:999px;background:var(--cobalt);opacity:.9;right:-50px;top:46%;rotate:-18deg;animation:bob 6s ease-in-out .2s infinite}
+.sh4{width:34px;height:34px;border-radius:50%;border:6px solid var(--green);left:12%;bottom:18%;animation:bob 3.6s ease-in-out .8s infinite}
+.sh5{width:22px;height:22px;border-radius:50%;background:var(--coral);left:24%;top:20%;animation:bob 3s ease-in-out .3s infinite}
+.sh6{width:90px;height:90px;border-radius:26px;background:var(--violet);opacity:.14;right:18%;bottom:8%;animation:turn 18s linear infinite}
+
+.kicker{font:600 12px/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);padding:10px 16px;border-radius:999px;background:var(--paper);box-shadow:var(--shadow);opacity:0;animation:pop .6s var(--spring) .9s forwards}
+.kicker b{color:var(--coral)}
+.word{display:flex;flex-wrap:nowrap;justify-content:center;margin:24px 0 4px;font:900 clamp(42px,13.2vw,150px)/.95 var(--fb);letter-spacing:-.045em}
+.word span{display:inline-block;opacity:0;transform:translateY(80%) rotate(-12deg);animation:letter .8s var(--spring) forwards}
+.word span:nth-child(1){animation-delay:1s}.word span:nth-child(2){animation-delay:1.035s}.word span:nth-child(3){animation-delay:1.07s}.word span:nth-child(4){animation-delay:1.105s}
+.word span:nth-child(5){animation-delay:1.14s}.word span:nth-child(6){animation-delay:1.175s}.word span:nth-child(7){animation-delay:1.21s}.word span:nth-child(8){animation-delay:1.245s}
+.word span:nth-child(odd){color:var(--ink)}.word span:nth-child(3n){color:var(--cobalt)}.word span:nth-child(4){color:var(--coral)}.word span:nth-child(7){color:var(--green)}
+.sub{max-width:600px;text-align:center;font:700 clamp(19px,4.6vw,26px)/1.35 var(--fb);margin:10px 0 0;opacity:0;animation:rise .7s ease-out 1.6s forwards}
+.sub i{font:italic 700 1.08em var(--fi)}
+.sub .pill{display:inline-block;padding:1px 14px 4px;border-radius:999px;background:var(--mustard);transform:rotate(-2deg)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:24px}
+.chip{font:700 14px/1 var(--fb);padding:11px 16px;border-radius:999px;background:var(--paper);box-shadow:var(--shadow);opacity:0;animation:pop .55s var(--spring) forwards}
+.chip:nth-child(1){animation-delay:1.9s}.chip:nth-child(2){animation-delay:2s}.chip:nth-child(3){animation-delay:2.1s}
+.chip em{font-style:normal;color:var(--coral)}
+
+/* пост-карусель: веер + слайды, сменяются кругом */
+.stage{position:relative;margin-top:44px;width:min(270px,68vw);opacity:0;animation:stageIn 1s var(--spring) 2.2s forwards}
+.fanc{position:absolute;inset:0 0 34px;z-index:0}
+.fanc i{position:absolute;inset:0;border-radius:24px;transform-origin:50% 115%;box-shadow:var(--shadow)}
+.fanc i:nth-child(1){background:var(--pink);animation:fanOut 1s var(--spring) 2.6s both;--a:-14deg}
+.fanc i:nth-child(2){background:var(--green);animation:fanOut 1s var(--spring) 2.68s both;--a:-7deg}
+.fanc i:nth-child(3){background:var(--mustard);animation:fanOut 1s var(--spring) 2.76s both;--a:8deg}
+.post{position:relative;z-index:1;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--paper);box-shadow:0 30px 60px -25px rgba(23,21,28,.55)}
+.sl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:18px;text-align:center;clip-path:circle(0% at 50% 50%);animation:slide 12s infinite}
+.sl b{font:900 26px/1 var(--fb);letter-spacing:-.04em}
+.sl small{display:block;margin-top:8px;font:600 11px var(--fm);letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.sl1{background:var(--cobalt);color:#fff;animation-delay:2.8s}
+.sl2{background:var(--mustard);color:var(--ink);animation-delay:5.8s}
+.sl3{background:var(--coral);color:#fff;animation-delay:8.8s}
+.sl4{background:var(--green);color:#fff;animation-delay:11.8s}
+.sl1 .pillw{display:inline-block;margin-top:14px;padding:6px 14px;border-radius:999px;background:#fff;color:var(--cobalt);font:italic 700 18px var(--fi);animation:bounce 1.6s var(--spring) infinite}
+.sl2 .bars{display:flex;align-items:flex-end;gap:10px;height:42%;width:70%;margin-top:16px}
+.sl2 .bars i{flex:1;border-radius:8px 8px 3px 3px;background:var(--ink);transform-origin:bottom;animation:grow 3s var(--spring) infinite}
+.sl2 .bars i:nth-child(1){height:38%}.sl2 .bars i:nth-child(2){height:62%;background:var(--cobalt);animation-delay:.1s}.sl2 .bars i:nth-child(3){height:48%;animation-delay:.2s}.sl2 .bars i:nth-child(4){height:95%;background:var(--coral);animation-delay:.3s}
+.sl3 .hearts{position:relative;width:100%;height:40%;margin-top:6px}
+.sl3 .hearts i{position:absolute;bottom:0;font-style:normal;font-size:30px;animation:fly 2.4s ease-out infinite}
+.sl3 .hearts i:nth-child(1){left:22%}.sl3 .hearts i:nth-child(2){left:46%;animation-delay:.5s;font-size:40px}.sl3 .hearts i:nth-child(3){left:68%;animation-delay:1s}
+.sl4 .ticks{display:grid;gap:8px;margin-top:14px;width:78%}
+.sl4 .ticks i{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.14);font:700 13px var(--fb);font-style:normal;text-align:left;opacity:0;animation:tick 3s var(--spring) infinite}
+.sl4 .ticks i::before{content:"✓";display:grid;place-items:center;width:20px;height:20px;border-radius:7px;background:var(--mustard);color:var(--ink);font-size:12px;flex:none}
+.sl4 .ticks i:nth-child(2){animation-delay:.15s}.sl4 .ticks i:nth-child(3){animation-delay:.3s}
+.pnum{position:absolute;top:10px;right:10px;z-index:3;font:600 11px var(--fm);padding:4px 8px;border-radius:99px;background:rgba(23,21,28,.55);color:#fff}
+.pnum::after{content:"1/4";animation:pn 12s steps(1) 2.8s infinite}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.dots i{width:7px;height:7px;border-radius:50%;background:#CFC6B4;animation:dot 12s steps(1) infinite}
+.dots i:nth-child(1){animation-delay:2.8s}.dots i:nth-child(2){animation-delay:5.8s}.dots i:nth-child(3){animation-delay:8.8s}.dots i:nth-child(4){animation-delay:11.8s}
+.scroll{position:absolute;bottom:22px;left:50%;translate:-50% 0;font:600 12px var(--fm);letter-spacing:.14em;color:var(--muted);text-transform:uppercase;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:rise .7s ease-out 3.2s forwards}
+.scroll::after{content:"";width:2px;height:26px;border-radius:2px;background:linear-gradient(var(--coral),transparent);animation:drip 1.6s ease-in-out infinite}
+
+@keyframes letter{to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes stageIn{from{opacity:0;transform:translateY(90px) rotate(6deg) scale(.85)}to{opacity:1;transform:rotate(-2deg)}}
+@keyframes fanOut{from{transform:none}to{transform:rotate(var(--a))}}
+@keyframes slide{0%{clip-path:circle(0% at 50% 60%)}3.2%{clip-path:circle(150% at 50% 60%)}25%{clip-path:circle(150% at 50% 60%)}25.1%,100%{clip-path:circle(0% at 50% 60%)}}
+@keyframes pn{0%{content:"1/4"}25%{content:"2/4"}50%{content:"3/4"}75%{content:"4/4"}}
+@keyframes dot{0%{background:var(--ink);transform:scale(1.3)}25%,100%{background:#CFC6B4;transform:none}}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -16px}}
+@keyframes turn{to{rotate:360deg}}
+@keyframes bounce{0%,100%{transform:none}30%{transform:translateY(-8px)}}
+@keyframes grow{0%{transform:scaleY(0)}35%,100%{transform:scaleY(1)}}
+@keyframes fly{0%{transform:translateY(0) scale(.4);opacity:0}20%{opacity:1;transform:translateY(-10px) scale(1)}100%{transform:translateY(-110px) scale(.9);opacity:0}}
+@keyframes tick{0%{opacity:0;transform:translateX(-20px)}25%,100%{opacity:1;transform:none}}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ КОНТЕНТ ============ */
+main{max-width:760px;margin:0 auto;padding:0 16px 40px}
+section{margin:48px 0}
+h2{font:900 clamp(28px,7vw,40px)/1.08 var(--fb);letter-spacing:-.04em;margin:0 0 16px}
+h2 small{display:block;font:600 12px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:12px}
+h2 i{font:italic 700 1.02em var(--fi);letter-spacing:-.01em;color:var(--cobalt)}
+p{margin:0 0 12px}
+.muted{color:var(--muted)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .7s var(--spring)}
+.reveal.in{opacity:1;transform:none}
+
+.ph{font-weight:800;margin:20px 0 8px}
+.pros{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pros>*{min-width:0}
+.pro{border-radius:24px;padding:18px 18px 8px;background:var(--paper);box-shadow:var(--shadow)}
+.pro.pay{background:var(--cobalt);color:#fff}
+.pro b{font:800 17px/1.3 var(--fb)}
+.pro ul{margin:10px 0 0;padding-left:20px}
+.pro li{margin-bottom:8px}
+.tag{display:inline-block;font:700 11px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:999px;margin-bottom:10px;background:var(--mustard);color:var(--ink)}
+.pro:not(.pay) .tag{background:var(--pink)}
+
+.sw{position:sticky;top:0;z-index:20;margin:22px -16px 0;padding:10px 16px 12px;background:rgba(243,239,230,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.swp{display:flex;align-items:center;gap:12px}
+.swp .track{flex:1;height:8px;border-radius:8px;background:#E2D9C7;overflow:hidden}
+.swp .fill{height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,var(--cobalt),var(--violet) 40%,var(--coral) 75%,var(--mustard));transition:width .5s var(--spring)}
+.swp .num{font:600 13px var(--fm);white-space:nowrap}
+
+.steps{display:grid;gap:18px;margin-top:20px}
+.steps>*{min-width:0}
+.step{--c:var(--cobalt);--ct:#fff;position:relative;background:var(--paper);border-radius:var(--r);padding:22px 18px 18px;box-shadow:var(--shadow);border:2px solid transparent;transition:border-color .3s}
+.step:nth-child(7n+1){--c:var(--cobalt)}.step:nth-child(7n+2){--c:var(--mustard);--ct:var(--ink)}.step:nth-child(7n+3){--c:var(--coral)}
+.step:nth-child(7n+4){--c:var(--green)}.step:nth-child(7n+5){--c:var(--violet)}.step:nth-child(7n+6){--c:var(--pink);--ct:var(--ink)}.step:nth-child(7n+7){--c:var(--ink)}
+.step.done{border-color:var(--green)}
+.step-head{display:flex;gap:14px;align-items:flex-start}
+.step-head>div:last-child{min-width:0}
+.n{flex:none;width:48px;height:48px;border-radius:16px;background:var(--c);color:var(--ct);display:grid;place-items:center;font:900 22px var(--fb);transform:rotate(-6deg)}
+.step.done .n{background:var(--green);color:#fff;transform:none}
+.step h3{font:800 20px/1.25 var(--fb);letter-spacing:-.02em;margin:3px 0 4px}
+.step .why{color:var(--muted);font-size:15px;margin:0}
+.do{margin:16px 0 0;padding:0;list-style:none;counter-reset:d;display:grid;gap:10px}
+.do>li{counter-increment:d;position:relative;min-width:0;padding:12px 14px 12px 46px;background:var(--cream);border-radius:16px}
+.do>li::before{content:counter(d);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--paper);color:var(--ink);font:700 12px/24px var(--fm);text-align:center;box-shadow:0 1px 0 var(--line)}
+.btnlbl{display:inline-block;max-width:100%;white-space:normal;overflow-wrap:anywhere;font:700 13px/1.25 var(--fm);padding:3px 8px;border-radius:8px;background:var(--ink);color:var(--cream)}
+.m{background:var(--mustard);border-radius:6px;padding:0 4px}
+.ok{margin-top:14px;padding:12px 14px;border-radius:16px;background:rgba(31,107,74,.08);border:1.5px dashed rgba(31,107,74,.45);font-size:15px}
+.ok b{color:var(--green)}
+.warn{margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(242,201,76,.22);font-size:15px}
+.warn b{color:#8A5A00}
+.check{margin-top:16px;display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:12px 16px;border-radius:18px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font:800 16px var(--fb);cursor:pointer;transition:transform .15s,background .3s,border-color .3s}
+.check:active{transform:scale(.97)}
+.check .box{flex:none;width:28px;height:28px;border-radius:10px;border:2.5px solid var(--ink);display:grid;place-items:center;transition:background .3s,border-color .3s}
+.check .box svg{width:16px;height:16px;stroke:#fff;stroke-width:3.4;fill:none;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s ease .05s}
+.step.done .check{background:rgba(31,107,74,.08);border-color:var(--green)}
+.step.done .check .box{background:var(--green);border-color:var(--green)}
+.step.done .check .box svg{stroke-dashoffset:0}
+
+.prompt{position:relative;margin-top:16px;border-radius:22px;background:var(--ink);overflow:hidden}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px 10px 16px;background:var(--c)}
+.prompt-top span{font:600 12px/1.3 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:var(--ct);min-width:0}
+.copy{flex:none;border:0;cursor:pointer;font:800 14px var(--fb);min-height:44px;padding:10px 16px;border-radius:14px;background:var(--paper);color:var(--ink);transition:transform .15s,background .3s}
+.copy:active{transform:scale(.95)}
+.copy.copied{background:var(--green);color:#fff}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-break:break-word;font:400 14px/1.6 var(--fm);color:#EDE7DA}
+.prompt pre mark{background:var(--mustard);color:var(--ink);border-radius:5px;padding:0 3px}
+
+.fixes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fx{border:0;cursor:pointer;min-height:44px;padding:10px 14px;border-radius:999px;background:var(--cream);color:var(--ink);font:700 14px var(--fb);transition:transform .15s,background .3s}
+.fx:active{transform:scale(.95)}
+.fx.copied{background:var(--green);color:#fff}
+.hint{font-size:14px;color:var(--muted);margin-top:8px}
+
+.done-banner{display:none;text-align:center;padding:28px 20px;border-radius:var(--r);background:var(--coral);color:#fff;margin-top:20px}
+.done-banner.show{display:block;animation:pop .6s var(--spring)}
+.done-banner b{font:900 26px/1.15 var(--fb);letter-spacing:-.03em;display:block;margin-bottom:6px}
+
+footer{background:var(--ink);color:#F3EFE6;margin-top:40px;padding:44px 16px 52px;text-align:center;border-radius:36px 36px 0 0;position:relative;overflow:hidden}
+footer h2{font-size:clamp(26px,6vw,34px)}
+footer h2 i{color:var(--mustard)}
+footer .muted{color:#B3ACA0}
+.table-cards{display:flex;justify-content:center;gap:0;margin:0 auto 22px;height:70px}
+.table-cards i{width:52px;height:64px;border-radius:12px;margin:0 -6px;box-shadow:0 10px 20px rgba(0,0,0,.35)}
+.table-cards i:nth-child(1){background:var(--cobalt);rotate:-14deg}.table-cards i:nth-child(2){background:var(--mustard);rotate:-4deg;translate:0 -6px}
+.table-cards i:nth-child(3){background:var(--coral);rotate:6deg}.table-cards i:nth-child(4){background:var(--green);rotate:15deg;translate:0 4px}
+.socials{display:grid;gap:12px;max-width:520px;margin:20px auto 0}
+.soc{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:22px;text-decoration:none;color:#fff;font-weight:800;font-size:17px;text-align:left;transition:transform .2s}
+.soc:hover{transform:translateY(-3px)}
+.soc svg{width:28px;height:28px;flex:none}
+.soc small{display:block;font-weight:500;font-size:14px;opacity:.85}
+.soc .arr{margin-left:auto;font-size:22px}
+.ig{background:linear-gradient(120deg,#F58529,#DD2A7B 45%,#8134AF 80%,#515BD4)}
+.tg{background:linear-gradient(120deg,#2AABEE,#1E88D0)}
+.save{margin-top:22px;color:#B3ACA0;font-size:14px}
+
+@media (max-width:560px){.pros{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .sl{clip-path:none}.sl:not(.sl1){display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wipe" aria-hidden="true"></div>
+
+<header class="hero">
+  <span class="shape sh1" aria-hidden="true"></span><span class="shape sh2" aria-hidden="true"></span><span class="shape sh3" aria-hidden="true"></span>
+  <span class="shape sh4" aria-hidden="true"></span><span class="shape sh5" aria-hidden="true"></span><span class="shape sh6" aria-hidden="true"></span>
+  <div class="kicker"><b>●</b> шпаргалка</div>
+  <h1 class="word" aria-label="КАРУСЕЛЬ"><span>К</span><span>А</span><span>Р</span><span>У</span><span>С</span><span>Е</span><span>Л</span><span>Ь</span></h1>
+  <p class="sub">Статичные посты листают мимо. <span class="pill">Живая карусель</span> — <i>одним промптом</i> в Claude</p>
+  <div class="chips">
+    <div class="chip"><em>1</em> промпт</div>
+    <div class="chip"><em>6</em> живых слайдов</div>
+    <div class="chip"><em>7</em> шагов</div>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="fanc"><i></i><i></i><i></i></div>
+    <div class="post">
+      <div class="sl sl1"><b>Тема</b><small>обложка цепляет</small><span class="pillw">одним промптом</span></div>
+      <div class="sl sl2"><b>Цифры</b><small>растут сами</small><div class="bars"><i></i><i></i><i></i><i></i></div></div>
+      <div class="sl sl3"><b>Лайки</b><small>движение держит</small><div class="hearts"><i>♥</i><i>♥</i><i>♥</i></div></div>
+      <div class="sl sl4"><b>Готово</b><small>сохрани</small><div class="ticks"><i>Тема</i><i>Промпт</i><i>Карусель</i></div></div>
+      <div class="pnum"></div>
+    </div>
+    <div class="dots"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <a class="scroll" href="#start">листай вниз</a>
+</header>
+
+<main>
+  <section id="start" class="reveal">
+    <h2><small>шпаргалка</small>Живая карусель <i>за вечер</i></h2>
+    <p class="muted">Иди по шагам сверху вниз. После каждого шага нажимай «Готово»: отметки сохранятся, даже если закроешь страницу.</p>
+
+    <p class="ph">Какой у тебя Claude?</p>
+    <div class="pros">
+      <div class="pro pay"><span class="tag">Платный</span><br><b>Платный Claude (Pro и выше)</b>
+        <ul><li>Хватит на 6–10 живых слайдов и несколько кругов правок.</li></ul></div>
+      <div class="pro"><span class="tag">Бесплатный</span><br><b>Бесплатный Claude</b>
+        <ul><li>Проси 4 слайда вместо 6 — так больше шансов уложиться в один сеанс (оценка примерная).</li><li>Лимит закончился? Продолжи позже в том же чате.</li></ul></div>
+    </div>
+
+    <div class="sw" aria-live="polite">
+      <div class="swp"><div class="track"><div class="fill"></div></div><div class="num">0 / 7</div></div>
+    </div>
+
+    <div class="steps">
+
+      <article class="step" data-step="1">
+        <div class="step-head"><div class="n">1</div><div><h3>Подготовь Claude</h3></div></div>
+        <ol class="do">
+          <li>Открой <a href="https://claude.ai" target="_blank" rel="noopener"><b>claude.ai</b></a> и войди в аккаунт.</li>
+          <li>Нажми на своё имя (слева внизу) → <span class="btnlbl">Настройки</span> → <span class="btnlbl">Возможности</span>. Убедись, что включено <span class="btnlbl">Выполнение кода и создание файлов</span> (обычно оно уже включено). Без него Claude не сможет записать слайды в видео.</li>
+          <li><b>Для платного:</b> модель выбери <b>Opus</b> — список моделей внизу, у поля ввода.</li>
+        </ol>
+        <div class="ok"><b>Готово, если:</b> ты в аккаунте Claude, нужная настройка включена.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="2">
+        <div class="step-head"><div class="n">2</div><div><h3>Подготовь тему</h3><p class="why">Пара минут в заметках — и промпт заполнится за секунду.</p></div></div>
+        <ol class="do">
+          <li>Запиши, <b>о чём карусель</b> и <b>для кого</b>. Например: «5 ошибок в шапке профиля — для мастеров маникюра».</li>
+          <li>Тезисы: 4–6 коротких пунктов. Нет тезисов? Claude напишет их сам.</li>
+          <li>Что будет на <b>последнем слайде</b>: «сохрани», «подпишись» или «напиши слово … в комментарии».</li>
+          <li>Есть фирменные цвета или логотип? Сделай скриншот своего профиля — пригодится в шаге 3.</li>
+        </ol>
+        <div class="ok"><b>Готово, если:</b> тема и призыв записаны.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="3">
+        <div class="step-head"><div class="n">3</div><div><h3>Отправь один промпт</h3><p class="why">Claude напишет тексты, соберёт 6 живых слайдов и покажет их в чате.</p></div></div>
+        <ol class="do">
+          <li>Открой <b>новый чат</b> в Claude.</li>
+          <li>Скопируй промпт ниже (кнопка <span class="btnlbl">Скопировать</span>) и вставь в поле ввода.</li>
+          <li>Замени всё в <mark class="m">[скобках]</mark> на своё из шага 2 и удали сами скобки.</li>
+          <li>Скриншот профиля или логотип? Прикрепи через <span class="btnlbl">+</span> рядом с полем ввода.</li>
+          <li>Отправь и подожди несколько минут.</li>
+        </ol>
+        <div class="prompt">
+          <div class="prompt-top"><span>промпт 1 · живая карусель</span><button class="copy" type="button" data-copy="p1">Скопировать</button></div>
+<pre id="p1">Сделай живую карусель для Instagram.
+
+Тема: <mark>[о чём карусель]</mark>
+Для кого: <mark>[кто твоя аудитория]</mark>
+Текст: <mark>[4–6 тезисов]</mark> или «напиши сам: обложка, 4 слайда по одной мысли, финал»
+Последний слайд: <mark>[сохрани / подпишись / напиши слово … в комментарии]</mark>
+Стиль: <mark>[мои цвета — на скриншоте / выбери сам: ярко, чисто, крупный текст]</mark>
+
+Как сделать:
+— 6 слайдов, формат 4:5 (1080×1350), один стиль на всю карусель;
+— на слайде одна мысль, крупный текст на русском, не больше 15 слов;
+— каждый слайд живой: 4–5 секунд, текст и фигуры появляются с движением, в конце слайд замирает, чтобы его успели прочитать;
+— обложка цепляет с первой секунды: крупный заголовок и движение сразу;
+— важное не ближе 80 px к краям;
+— без звука.
+
+Сначала покажи карусель здесь, в чате, чтобы её можно было пролистать. Потом проверь орфографию, запиши каждый слайд отдельным MP4 (01.mp4, 02.mp4 …) и дай скачать одним архивом.</pre>
+        </div>
+        <div class="ok"><b>Готово, если:</b> в чате появилась карусель, её можно пролистать.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="4">
+        <div class="step-head"><div class="n">4</div><div><h3>Пролистай и поправь</h3></div></div>
+        <ol class="do">
+          <li>Пролистай все слайды. Текст читается? Обложка цепляет?</li>
+          <li>Что-то не так — напиши одной фразой. Нажми на подсказку ниже, она скопируется:</li>
+        </ol>
+        <div class="fixes">
+          <button class="fx" type="button" data-text="Сделай текст крупнее">Текст крупнее</button>
+          <button class="fx" type="button" data-text="Сделай движение спокойнее, чтобы текст успевали прочитать">Движение спокойнее</button>
+          <button class="fx" type="button" data-text="Сделай обложку ярче и заголовок короче">Обложка ярче</button>
+          <button class="fx" type="button" data-text="Перепиши слайд 3: ">Переписать слайд</button>
+          <button class="fx" type="button" data-text="Поменяй цвета на ">Другие цвета</button>
+        </div>
+        <p class="hint">«Переписать слайд» и «Другие цвета» допиши своими словами перед отправкой.</p>
+        <div class="ok"><b>Готово, если:</b> карусель нравится целиком.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="5">
+        <div class="step-head"><div class="n">5</div><div><h3>Скачай слайды</h3></div></div>
+        <ol class="do">
+          <li>Нажми на архив в ответе Claude и скачай его. Внутри — слайды по порядку: 01.mp4, 02.mp4 …</li>
+          <li>Архива нет? Напиши в чат: «Запиши каждый слайд в MP4 и дай скачать архивом».</li>
+          <li>На телефоне архив откроется в приложении «Файлы» — сохрани видео в галерею.</li>
+        </ol>
+        <div class="warn"><b>Видео не получается?</b> Напиши: «Сделай каждый слайд картинкой PNG» — выйдет обычная карусель в том же стиле. Или открой превью на компьютере и запиши экран.</div>
+        <div class="ok"><b>Готово, если:</b> слайды лежат в галерее телефона.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="6">
+        <div class="step-head"><div class="n">6</div><div><h3>Выложи в Instagram</h3></div></div>
+        <ol class="do">
+          <li>Нажми <span class="btnlbl">+</span> → <span class="btnlbl">Публикация</span>.</li>
+          <li>Нажми значок <span class="btnlbl">Выбрать несколько</span> (два квадратика) и отметь слайды <b>по порядку</b>: 01, 02, 03 …</li>
+          <li>Проверь, что выбран формат 4:5: если пост квадратный, нажми значок обрезки в углу превью.</li>
+          <li><span class="btnlbl">Далее</span> → напиши подпись → <span class="btnlbl">Поделиться</span>.</li>
+        </ol>
+        <div class="ok"><b>Готово, если:</b> карусель вышла, слайды двигаются.</div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+
+      <article class="step" data-step="7">
+        <div class="step-head"><div class="n">7</div><div><h3>Следующие карусели — одной фразой</h3><p class="why">Стиль уже есть в чате — новая карусель делается за один запрос.</p></div></div>
+        <ol class="do">
+          <li>Скопируй фразу ниже и вставь в <b>тот же чат</b>.</li>
+          <li>Замени <mark class="m">[тему]</mark> на свою и отправь.</li>
+          <li>Скачай и выложи, как в шагах 5–6.</li>
+        </ol>
+        <div class="prompt">
+          <div class="prompt-top"><span>промпт 2 · ещё карусель</span><button class="copy" type="button" data-copy="p2">Скопировать</button></div>
+<pre id="p2">Сделай ещё одну живую карусель в этом же стиле. Тема: <mark>[тема]</mark>. Текст напиши сам.</pre>
+        </div>
+        <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
+      </article>
+    </div>
+    <div class="done-banner"><b>Карусель готова! 🎉</b>Отметь меня в сторис — посмотрю.</div>
+  </section>
+</main>
+
+<footer>
+  <div class="table-cards" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <h2>Ещё больше <i>таких находок</i></h2>
+  <p class="muted" style="max-width:480px;margin:0 auto">Каждую неделю — инструменты, которые быстро внедрить и хочется сохранить.</p>
+  <div class="socials">
+    <a class="soc ig" href="https://www.instagram.com/lika_feniks/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
+      <div>Instagram<small>@lika_feniks</small></div><span class="arr">→</span></a>
+    <a class="soc tg" href="https://t.me/selfrunning_blog" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M21.5 4.3 2.9 11.5c-1.3.5-1.3 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5ZM9.4 14.2l9-5.7c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2-1.6-4.6Z"/></svg>
+      <div>Telegram-канал<small>@selfrunning_blog</small></div><span class="arr">→</span></a>
+  </div>
+  <p class="save">Сохрани эту страницу в закладки — пригодится для следующей карусели.</p>
+</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(function(){var w=document.querySelector('.wipe');w&&w.remove()},1100);
+
+  // появление блоков
+  var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.06}):null;
+  document.querySelectorAll('.reveal').forEach(function(el){io?io.observe(el):el.classList.add('in')});
+
+  // хранение
+  var KEY='polka-karusel-v1', state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+
+  // галочки
+  function render(){
+    var steps=[].slice.call(document.querySelectorAll('.step')),d=0;
+    steps.forEach(function(s){var on=!!state['s'+s.dataset.step];s.classList.toggle('done',on);if(on)d++});
+    document.querySelector('.fill').style.width=(d/steps.length*100)+'%';
+    document.querySelector('.num').textContent=d+' / '+steps.length;
+    document.querySelector('.done-banner').classList.toggle('show',d===steps.length);
+  }
+  document.querySelectorAll('.step').forEach(function(s){
+    s.querySelector('.check').addEventListener('click',function(){
+      var k='s'+s.dataset.step;state[k]=!state[k];save();render();
+      if(state[k]){var nx=s.nextElementSibling;if(nx&&nx.classList.contains('step')&&!state['s'+nx.dataset.step]){setTimeout(function(){nx.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},350)}}
+    });
+  });
+  render();
+
+  // копирование
+  function copyText(t,btn){
+    function ok(){var old=btn.dataset.label||btn.textContent;btn.dataset.label=old;btn.classList.add('copied');btn.textContent='Скопировано ✓';setTimeout(function(){btn.classList.remove('copied');btn.textContent=old},1800)}
+    function fallback(){var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,t.length);try{document.execCommand('copy')}catch(e){}document.body.removeChild(ta);ok()}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fallback)}else fallback();
+  }
+  document.querySelectorAll('.copy,.fx').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.text; if(!t&&b.dataset.copy){t=document.getElementById(b.dataset.copy).innerText.trim()}
+      copyText(t,b);
+    });
+  });
+})();
+</script>
+</body>
+</html>

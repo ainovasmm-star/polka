@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>МОУШН — шпаргалка</title>
-<meta name="description" content="Шпаргалка: моушн-ролик для своего бренда через Claude по ссылке на любой ролик из библиотеки. Без After Effects.">
-<meta property="og:title" content="МОУШН — моушн-ролик через Claude без After Effects">
-<meta property="og:description" content="Ссылка на ролик → Claude разбирает стиль → делает твой ролик в этом стиле → отдаёт MP4.">
+<meta name="description" content="Шпаргалка: как повторить стиль любого моушн-ролика и сделать свой через Claude. Пошагово, без After Effects.">
+<meta property="og:title" content="МОУШН — повтори стиль любого ролика через Claude">
+<meta property="og:description" content="Выбери ролик, который нравится → Claude разберёт его стиль и звук → сделает твой ролик в этом стиле → отдаст MP4.">
 <meta name="theme-color" content="#110E1B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,7 +126,7 @@ p{margin:0 0 12px}
 .doms{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .doms .dom{font-size:15px;padding:6px 12px}
 
-.sw{position:sticky;top:0;z-index:20;margin:18px -16px 0;padding:10px 16px 12px;background:rgba(17,14,27,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.sw{position:sticky;top:0;z-index:20;margin:22px -16px 0;padding:10px 16px 12px;background:rgba(17,14,27,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:16px;background:var(--card2);border:1px solid var(--line)}
 .segb{border:0;cursor:pointer;padding:11px 8px;border-radius:12px;background:transparent;color:var(--muted);font:800 15px var(--fb);transition:background .25s,color .25s}
 .segb.on{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(116,36,205,.45)}
@@ -139,7 +139,11 @@ p{margin:0 0 12px}
 .pro b{font:800 17px var(--fb)}
 .pro ul{margin:10px 0 0;padding-left:20px}
 .pro li{margin-bottom:8px}
-body[data-track=paid] .only-free, body[data-track=free] .only-paid{display:none!important}
+.pros{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.pros{grid-template-columns:1fr}}
+.pro .tag{display:inline-block;font:700 11px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:8px;margin-bottom:10px;background:var(--card2);color:var(--lav)}
+.pro.pay .tag{background:var(--accent);color:#fff}
+.ph{font-weight:800;margin:18px 0 6px}
 .goals{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
 .goal{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:16px;background:var(--bg2);border:1px solid #2A223D}
 .goal .gi{font-size:20px;line-height:1.2}
@@ -265,12 +269,18 @@ footer h2{font-size:24px}
 .save{margin-top:22px;color:var(--muted);font-size:14px}
 
 @media (max-width:420px){.total dl div{grid-template-columns:1fr;gap:2px}}
+/* адаптив: длинные надписи переносятся и не распирают карточки */
+.steps>*,.pros>*,.do>li{min-width:0}
+.btnlbl{white-space:normal;max-width:100%;overflow-wrap:anywhere}
+.copy{min-height:44px}
+.sub s{white-space:nowrap}
+.check{min-height:52px}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
-<body data-track="paid">
+<body>
 
 <div class="wipe" aria-hidden="true"><i></i></div>
 
@@ -279,10 +289,10 @@ footer h2{font-size:24px}
   <canvas id="sparks" aria-hidden="true"></canvas>
   <div class="kicker"><b>●</b> шпаргалка</div>
   <h1 class="word" aria-label="МОУШН"><span>М</span><span>О</span><span>У</span><span>Ш</span><span>Н</span></h1>
-  <p class="sub">Моушн-ролик для своего бренда — <span class="pill">в стиле любого ролика</span><br><s>After Effects</s> не нужен</p>
+  <p class="sub">Выбери ролик, который нравится, — <span class="pill">Claude повторит его стиль</span><br>для твоего ролика. <s>After Effects</s> не нужен</p>
   <div class="chips">
     <div class="chip"><em>1</em> ссылка</div>
-    <div class="chip"><em>2</em> промпта</div>
+    <div class="chip"><em>3</em> промпта</div>
     <div class="chip"><em>7</em> шагов</div>
   </div>
   <div class="stage" aria-hidden="true">
@@ -290,7 +300,7 @@ footer h2{font-size:24px}
     <div class="phone">
       <div class="notch"></div>
       <div class="rec">REC</div>
-      <div class="scene s1"><div class="blob"></div><div class="t"><span>Т</span><span>В</span><span>О</span><span>Й</span> бренд</div></div>
+      <div class="scene s1"><div class="blob"></div><div class="t"><span>Т</span><span>В</span><span>О</span><span>Й</span> ролик</div></div>
       <div class="scene s2"><div class="lbl">Цифры<small>оживают сами</small></div><div class="bars"><i></i><i></i><i></i><i></i></div></div>
       <div class="scene s3"><div class="fan"><i></i><i></i><i></i><i></i></div><div class="cta">Сделано в <b>Claude</b> за вечер</div></div>
       <div class="bar"></div>
@@ -301,22 +311,19 @@ footer h2{font-size:24px}
 
 <main>
   <section id="start" class="reveal">
-    <h2><small>шпаргалка</small>Свой ролик в стиле любого моушна</h2>
-    <p class="muted">Выбери свою версию Claude — шаги ниже подстроятся. Переключатель всегда наверху.</p>
+    <h2><small>шпаргалка</small>Как повторить стиль любого ролика и сделать свой</h2>
+    <p class="muted">Иди по шагам сверху вниз. После каждого шага нажимай «Готово»: отметки сохранятся, даже если закроешь страницу.</p>
 
-    <div class="sw" aria-live="polite">
-      <div class="seg" role="tablist">
-        <button type="button" class="segb" data-track="paid" role="tab">Платный Claude</button>
-        <button type="button" class="segb" data-track="free" role="tab">Бесплатный Claude</button>
-      </div>
-      <div class="swp"><div class="track"><div class="fill"></div></div><div class="num">0 / 7</div></div>
+    <p class="ph">Какой у тебя Claude?</p>
+    <div class="pros">
+      <div class="pro pay"><span class="tag">Платный</span><br><b>Платный Claude (Pro и выше)</b>
+        <ul><li>Лимитов хватает на много роликов и правок — делай, сколько нужно.</li></ul></div>
+      <div class="pro"><span class="tag">Бесплатный</span><br><b>Бесплатный Claude</b>
+        <ul><li>За один сеанс хватит на 1 ролик 15–20 секунд и 2 круга правок (оценка примерная).</li><li>Лимит закончился? Продолжи позже в том же чате.</li></ul></div>
     </div>
 
-    <div class="pros">
-      <div class="pro only-paid"><b>Платный Claude (Pro)</b>
-        <ul><li>Сильнее модель (Opus) — стиль повторяется точнее</li><li>Сложные движения: 3D, фото, много сцен</li><li>Готовое видео сразу файлом MP4</li><li>Правок — сколько нужно</li></ul></div>
-      <div class="pro only-free"><b>Бесплатный Claude</b>
-        <ul><li>Ничего не платишь</li><li>Хватит на простой ролик: текст + фигуры, 2–3 сцены</li><li>Стиль разбирает так же — по прикреплённому видео</li><li>Видео сохраняешь записью экрана, правок — 1–2: лимит небольшой</li></ul></div>
+    <div class="sw" aria-live="polite">
+      <div class="swp"><div class="track"><div class="fill"></div></div><div class="num">0 / 7</div></div>
     </div>
 
     <div class="steps">
@@ -324,32 +331,32 @@ footer h2{font-size:24px}
       <article class="step" data-step="1">
         <div class="step-head"><div class="n">1</div><div><h3>Подготовь Claude</h3></div></div>
         <ol class="do">
-          <li class="only-paid">Нужна подписка <b>Pro</b> (или выше). Модель — <b>Opus</b>: выбирается внизу, у поля ввода.</li>
-          <li class="only-free">Открой <a href="https://claude.ai" target="_blank" rel="noopener"><b>claude.ai</b></a> и войди в аккаунт.</li>
-          <li>Проверь, что включено <span class="btnlbl">Code execution and file creation</span>: своё имя слева внизу → <span class="btnlbl">Settings</span> → <span class="btnlbl">Capabilities</span>. Обычно оно уже включено — так Claude сможет «смотреть» видео по кадрам.</li>
-          <li class="only-free">Делай всё в <b>одном чате</b> от начала до конца — так Claude помнит стиль и меньше тратит лимит.</li>
+          <li>Открой <a href="https://claude.ai" target="_blank" rel="noopener"><b>claude.ai</b></a> и войди в аккаунт.</li>
+          <li>Нажми на своё имя (слева внизу) → <span class="btnlbl">Настройки</span> → <span class="btnlbl">Возможности</span>. Убедись, что включено <span class="btnlbl">Выполнение кода и создание файлов</span> (обычно оно уже включено). Без него Claude не сможет посмотреть видео по кадрам и собрать ролик.</li>
+          <li><b>Для платного:</b> нужна подписка <b>Pro или выше</b>. Модель выбери <b>Opus</b> — список моделей внизу, у поля ввода.</li>
         </ol>
-        <div class="ok"><b>Итог шага:</b> переключатель включён, открыт новый чат.</div>
+        <div class="ok"><b>Готово, если:</b> ты в аккаунте Claude, нужная настройка включена.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="2">
-        <div class="step-head"><div class="n">2</div><div><h3>Скачай ролик, который нравится</h3><p class="why">Смотри на движение и настроение, а не на тему — тему ты поменяешь на свою.</p></div></div>
+        <div class="step-head"><div class="n">2</div><div><h3>Скачай ролик, который нравится</h3></div></div>
         <ol class="do">
-          <li>Открой <a href="https://prompt-motion.com" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — бесплатная библиотека моушн-роликов, сделанных в Claude.</li>
-          <li>Открой ролик, который зацепил, и скачай видео к себе.</li>
+          <li>Открой <a href="https://prompt-motion.com/" target="_blank" rel="noopener"><b>prompt-motion.com</b></a> — бесплатная библиотека моушн-роликов, сделанных в Claude.</li>
+          <li>Выбери ролик, который тебе понравился, и открой его.</li>
+          <li>Скачай видео к себе на телефон или компьютер.</li>
         </ol>
-        <div class="warn only-free"><b>Совет:</b> бесплатному Claude бери ролики попроще — с текстом и фигурами. 3D и фото на бесплатном лимите обычно не вытянуть.</div>
-        <div class="ok"><b>Итог шага:</b> видео лежит у тебя в загрузках.</div>
+        <div class="ok"><b>Готово, если:</b> видеофайл лежит в загрузках.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="3">
-        <div class="step-head"><div class="n">3</div><div><h3>Попроси разобрать стиль</h3><p class="why">Claude нарежет видео на кадры, опишет стиль и даст промпт для таких же роликов.</p></div></div>
+        <div class="step-head"><div class="n">3</div><div><h3>Попроси Claude разобрать стиль</h3><p class="why">Claude посмотрит ролик по кадрам, послушает звук и опишет стиль.</p></div></div>
         <ol class="do">
-          <li>Нажми <span class="btnlbl">Скопировать</span> у промпта ниже и вставь в чат Claude.</li>
-          <li>Нажми <span class="btnlbl">+</span> (или скрепку) и прикрепи скачанное видео.</li>
-          <li>Отправь.</li>
+          <li>Открой <b>новый чат</b> в Claude.</li>
+          <li>Нажми <span class="btnlbl">+</span> (или значок скрепки) рядом с полем ввода и <b>прикрепи ролик, скачанный в шаге 2</b>.</li>
+          <li>Скопируй промпт ниже (кнопка <span class="btnlbl">Скопировать</span>) и вставь в поле ввода.</li>
+          <li>Отправь и подожди пару минут.</li>
         </ol>
         <div class="prompt">
           <div class="prompt-top"><span>промпт 1 · разбор стиля</span><button class="copy" type="button" data-copy="p1">Скопировать</button></div>
@@ -357,101 +364,83 @@ footer h2{font-size:24px}
 
 Нарежь видео на кадры (2–3 кадра в секунду), собери их в листы-раскадровки и посмотри все. Описывай только то, что реально видно в кадрах.
 
+Если в видео есть звук, вытащи дорожку и разбери его: темп, на какие доли идут удары, где тишина и нарастание, какие слои слышны, как звучит финал.
+
 Коротко по пунктам:
 — сцены: сколько, как сменяются, есть ли ритм;
-— цвета: основные и акцент (с кодами);
+— цвета: основные и акцент, с кодами;
 — шрифты и как двигается текст;
 — формы и анимация в каждой сцене;
+— рамки и подписи (таймкод, уголки), если есть;
 — приёмы, которые делают ролик «дорогим»;
+— звук;
 — 3–5 признаков, по которым стиль узнаётся.
 
-В конце напиши готовый промпт, по которому можно сделать ролик в этом же стиле на любую тему. Пиши по-русски, без воды.</pre>
+В конце напиши готовый промпт, по которому можно сделать ролик в этом же стиле, со звуком, на любую тему. Пиши по-русски, без воды.</pre>
         </div>
-        <div class="warn only-free"><b>Пишет, что не может открыть видео?</b> Сделай 3–4 скриншота ролика (начало, середина, конец) и прикрепи их вместо видео.</div>
-        <div class="ok"><b>Итог шага:</b> Claude прислал разбор стиля и в конце — готовый промпт.</div>
+        <div class="warn"><b>Claude пишет, что не может открыть видео?</b> Сделай 3–4 скриншота ролика (начало, середина, конец) и загрузи их вместо видео.</div>
+        <div class="ok"><b>Готово, если:</b> Claude прислал описание стиля ролика.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="4">
         <div class="step-head"><div class="n">4</div><div><h3>Проверь разбор</h3></div></div>
         <ol class="do">
-          <li>Прочитай описание. Похоже на ролик, который ты выбрала?</li>
-          <li>Если нет — напиши обычными словами, что не так. Например: «цвета там тёмные, а не светлые» или «текст там вылетает по буквам». Claude поправит.</li>
-          <li>Скопируй промпт из конца ответа себе в заметки. Это твой «стиль» — по нему можно делать ролики хоть каждый день.</li>
+          <li>Прочитай описание. Похоже на ролик из шага 2?</li>
+          <li>Если нет, напиши в чат обычными словами, что не так. Например: «цвета там тёмные, а не светлые» или «текст там вылетает по буквам». Claude поправит разбор.</li>
+          <li>Если всё верно — переходи к шагу 5.</li>
         </ol>
-        <div class="ok"><b>Итог шага:</b> разбор совпадает с роликом, промпт сохранён в заметках.</div>
+        <div class="ok"><b>Готово, если:</b> описание совпадает с роликом из шага 2.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="5">
-        <div class="step-head"><div class="n">5</div><div><h3>Сделай свой ролик</h3><p class="why">Сначала реши, для чего он тебе. Вот для чего чаще всего делают моушн:</p></div></div>
-        <div class="goals"><div class="goal"><span class="gi">🎬</span><div><b>Начало для Reels</b><small>Первые 2–3 секунды, которые не дают пролистать</small></div></div><div class="goal"><span class="gi">💡</span><div><b>Объяснить мысль</b><small>Совет, правило, «3 ошибки» — текстом на экране</small></div></div><div class="goal"><span class="gi">📣</span><div><b>Анонс</b><small>Эфир, запуск, новый продукт, мероприятие</small></div></div><div class="goal"><span class="gi">🏷</span><div><b>Промо</b><small>Товар, услуга, акция, скидка</small></div></div><div class="goal"><span class="gi">📈</span><div><b>Результат</b><small>Кейс, итоги месяца — только настоящие цифры</small></div></div><div class="goal"><span class="gi">✨</span><div><b>Заставка</b><small>Интро с логотипом или именем для всех роликов</small></div></div></div>
+        <div class="step-head"><div class="n">5</div><div><h3>Сделай свой ролик</h3></div></div>
         <ol class="do">
-          <li>Скопируй промпт ниже и вставь в <b>тот же чат</b>.</li>
-          <li>Замени всё в <mark class="m">[скобках]</mark> на своё: для чего ролик и какой текст будет на экране. Скобки удали.</li>
-          <li>Есть логотип — прикрепи картинкой. Нет — не страшно.</li>
-          <li>Отправь и подожди несколько минут. <span class="only-paid">Ролик появится в окне справа (на телефоне — ниже).</span><span class="only-free">Ролик появится в окне рядом с ответом.</span></li>
+          <li>Скопируй промпт ниже (кнопка <span class="btnlbl">Скопировать</span>) и вставь в поле ввода <b>в том же чате</b>.</li>
+          <li>Замени всё в <mark class="m">[скобках]</mark> на своё и удали сами скобки.</li>
+          <li>Есть логотип? Прикрепи его картинкой. Нет — не страшно.</li>
+          <li>Отправь и подожди несколько минут.</li>
         </ol>
-        <div class="prompt only-paid">
+        <div class="prompt">
           <div class="prompt-top"><span>промпт 2 · мой ролик</span><button class="copy" type="button" data-copy="p2">Скопировать</button></div>
 <pre id="p2">По этому стилю сделай мой ролик.
 
-Для чего ролик: <mark>[например: начало рилса / анонс эфира / промо услуги]</mark>
-Текст на экране: <mark>[3–5 коротких фраз — по одной на сцену]</mark>
-Цвета: <mark>[мои цвета — или «как в референсе»]</mark>
+О чём и для чего ролик: <mark>[например: анонс моего канала про …, начало рилса, промо услуги]</mark>
+Текст на экране: <mark>[3–5 коротких фраз]</mark> или «придумай сам на тему …»
 Последний кадр: <mark>[призыв, ник или название]</mark>
-Логотип: <mark>[приложила / не нужен]</mark>
+Цвета: <mark>[мои / как в исходном ролике]</mark>
+Логотип: <mark>[прикреплён / не нужен]</mark>
+Звук: <mark>[музыка как в исходном ролике / только эффекты / без звука]</mark>
 
-Вертикально 9:16, 10–15 секунд, без звука — весь смысл в тексте на экране: крупно и на русском.
-Когда ролик готов, запиши его в видеофайл MP4 и дай скачать.</pre>
+Вертикально 9:16, 10–15 секунд, текст крупно и на русском. Звук без перебора: ритм и 1–2 слоя, эффекты только на ключевых моментах. Перед отдачей проверь кадры и орфографию текста. Запиши ролик в MP4 и дай скачать.</pre>
         </div>
-        <div class="prompt only-free">
-          <div class="prompt-top"><span>промпт 2 · мой ролик</span><button class="copy" type="button" data-copy="f2">Скопировать</button></div>
-<pre id="f2">По этому стилю сделай мой ролик.
-
-Для чего ролик: <mark>[например: начало рилса / анонс эфира / промо услуги]</mark>
-Текст на экране: <mark>[2–3 короткие фразы — по одной на сцену]</mark>
-Цвета: <mark>[мои цвета — или «как в референсе»]</mark>
-
-Вертикально 9:16, 3 сцены, 8–10 секунд, без звука, текст крупно и на русском.
-Сделай одной HTML-страницей, ролик пусть играет по кругу.</pre>
-        </div>
-        <div class="warn"><b>Не нравится?</b> Напиши одной фразой, что поменять: «быстрее», «текст крупнее», «больше движения». <span class="only-free">На бесплатном собери все правки в одно сообщение — лимит небольшой.</span></div>
-        <div class="ok"><b>Итог шага:</b> в окне крутится твой ролик с твоим текстом.</div>
+        <div class="warn"><b>Не нравится результат?</b> Напиши одной фразой, что поменять: «быстрее», «текст крупнее», «звука меньше».</div>
+        <div class="ok"><b>Готово, если:</b> Claude прислал ролик с твоим текстом.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="6">
         <div class="step-head"><div class="n">6</div><div><h3>Сохрани ролик</h3></div></div>
-        <ol class="do only-paid">
-          <li>Claude пришлёт файл <b>MP4</b> — нажми на него и скачай.</li>
+        <ol class="do">
+          <li>Нажми на файл <b>MP4</b> в ответе Claude и скачай его.</li>
           <li>Файла нет? Напиши в чат: «Запиши ролик в MP4 и дай скачать».</li>
-          <li>Музыку добавь уже в Instagram, когда будешь выкладывать.</li>
         </ol>
-        <ol class="do only-free">
-          <li>Разверни окно с роликом на весь экран (значок в углу окна).</li>
-          <li>Включи запись экрана:
-            <table class="fields">
-              <tr><td><b>iPhone</b></td><td>Пункт управления → кнопка записи</td></tr>
-              <tr><td><b>Android</b></td><td>шторка → «Запись экрана»</td></tr>
-              <tr><td><b>Mac</b></td><td>Cmd + Shift + 5 → «Записать выбранную часть»</td></tr>
-              <tr><td><b>Windows</b></td><td>Win + Alt + R</td></tr>
-            </table></li>
-          <li>Дай ролику проиграться один раз, останови запись и обрежь лишнее (на телефоне — прямо в галерее).</li>
-          <li>Музыку добавь уже в Instagram.</li>
-        </ol>
-        <div class="ok"><b>Итог шага:</b> видео лежит у тебя в телефоне или на компьютере.</div>
+        <div class="ok"><b>Готово, если:</b> MP4 лежит в телефоне или на компьютере.</div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
 
       <article class="step" data-step="7">
         <div class="step-head"><div class="n">7</div><div><h3>Делай ещё ролики в этом стиле</h3><p class="why">Стиль уже есть в чате — следующий ролик делается одной фразой.</p></div></div>
         <ol class="do">
-          <li>Выбери ниже, какой ролик нужен, и нажми <span class="btnlbl">Скопировать</span>.</li>
-          <li>Вставь в <b>тот же чат</b>, замени текст в <mark class="m">[скобках]</mark> на свой и отправь.</li>
+          <li>Скопируй фразу ниже (кнопка <span class="btnlbl">Скопировать</span>) и вставь в <b>тот же чат</b>.</li>
+          <li>Замени <mark class="m">[тема и текст]</mark> на свои и отправь.</li>
           <li>Сохрани ролик, как в шаге 6.</li>
         </ol>
-        <div class="fixes"><div class="fix"><span>Начало для Reels</span><code class="phr">В этом же стиле сделай ещё один ролик. Хук для начала рилса на 3 секунды. Текст: [фраза-цепляшка]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Хук для начала рилса на 3 секунды. Текст: [фраза-цепляшка]">Скопировать</button></div><div class="fix"><span>Объяснить мысль</span><code class="phr">В этом же стиле сделай ещё один ролик. Ролик-объяснение: [тема], 3 коротких пункта: [пункт 1], [пункт 2], [пункт 3]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Ролик-объяснение: [тема], 3 коротких пункта: [пункт 1], [пункт 2], [пункт 3]">Скопировать</button></div><div class="fix"><span>Анонс</span><code class="phr">В этом же стиле сделай ещё один ролик. Анонс: [что], [когда], [где смотреть или купить]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Анонс: [что], [когда], [где смотреть или купить]">Скопировать</button></div><div class="fix"><span>Промо</span><code class="phr">В этом же стиле сделай ещё один ролик. Промо: [товар или услуга], главная выгода: [одна фраза], условие: [скидка и срок]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Промо: [товар или услуга], главная выгода: [одна фраза], условие: [скидка и срок]">Скопировать</button></div><div class="fix"><span>Результат</span><code class="phr">В этом же стиле сделай ещё один ролик. Ролик-итог: [что сделала] и мои настоящие цифры: [цифры]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Ролик-итог: [что сделала] и мои настоящие цифры: [цифры]">Скопировать</button></div><div class="fix"><span>Заставка</span><code class="phr">В этом же стиле сделай ещё один ролик. Заставка на 4 секунды с моим логотипом или именем: [имя или название]</code><button class="copy" type="button" data-text="В этом же стиле сделай ещё один ролик. Заставка на 4 секунды с моим логотипом или именем: [имя или название]">Скопировать</button></div></div>
+        <div class="prompt">
+          <div class="prompt-top"><span>промпт 3 · ещё один ролик</span><button class="copy" type="button" data-copy="p3">Скопировать</button></div>
+<pre id="p3">В этом же стиле сделай ещё один ролик. <mark>[тема и текст]</mark></pre>
+        </div>
         <button class="check" type="button"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Готово</button>
       </article>
     </div>
@@ -502,31 +491,25 @@ footer h2{font-size:24px}
   watch(document);
 
   // хранение
-  var KEY='polka-moushn-v6', state={};
+  var KEY='polka-moushn-v7', state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){state={}}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
 
-  // переключатель платный/бесплатный
-  var segs=[].slice.call(document.querySelectorAll('.segb'));
-  function setTrack(t){document.body.dataset.track=t;segs.forEach(function(b){var on=b.dataset.track===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});state._track=t;save();render()}
-  segs.forEach(function(b){b.addEventListener('click',function(){setTrack(b.dataset.track)})});
   // галочки
   function render(){
-    [document].forEach(function(p){
-      var steps=[].slice.call(p.querySelectorAll('.step')),d=0;
-      steps.forEach(function(s){var on=!!state[(document.body.dataset.track||'paid')+s.dataset.step];s.classList.toggle('done',on);if(on)d++});
-      p.querySelector('.fill').style.width=(d/steps.length*100)+'%';
-      p.querySelector('.num').textContent=d+' / '+steps.length;
-      p.querySelector('.done-banner').classList.toggle('show',d===steps.length);
-    });
+    var steps=[].slice.call(document.querySelectorAll('.step')),d=0;
+    steps.forEach(function(s){var on=!!state['s'+s.dataset.step];s.classList.toggle('done',on);if(on)d++});
+    document.querySelector('.fill').style.width=(d/steps.length*100)+'%';
+    document.querySelector('.num').textContent=d+' / '+steps.length;
+    document.querySelector('.done-banner').classList.toggle('show',d===steps.length);
   }
   document.querySelectorAll('.step').forEach(function(s){
     s.querySelector('.check').addEventListener('click',function(){
-      var k=(document.body.dataset.track||'paid')+s.dataset.step;state[k]=!state[k];save();render();
-      if(state[k]){var nx=s.nextElementSibling;if(nx&&!state[(document.body.dataset.track||'paid')+nx.dataset.step]){setTimeout(function(){nx.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},350)}}
+      var k='s'+s.dataset.step;state[k]=!state[k];save();render();
+      if(state[k]){var nx=s.nextElementSibling;if(nx&&nx.classList.contains('step')&&!state['s'+nx.dataset.step]){setTimeout(function(){nx.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})},350)}}
     });
   });
-  setTrack(state._track==='free'?'free':'paid');
+  render();
 
   // копирование
   function copyText(t,btn){
